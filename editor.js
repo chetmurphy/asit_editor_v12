@@ -176,10 +176,10 @@ editor.setTheme("ace/theme/chrome");
 editor.session.setMode("ace/mode/yaml");
 editor.session.on('change', autosave); //TBD restore and implement
 
-console.log('Editor created 58');
+console.log('Editor created 59');
 
-function commands() {
-    editor.commands.exec("showSettingsMenu", editor);
+function commands(cmd) {
+    editor.commands.exec(cmd, editor);
 }
 
 // var dom = require("ace/lib/dom");
