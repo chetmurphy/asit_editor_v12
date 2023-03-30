@@ -174,24 +174,28 @@
         document.oncontextmenu = rightClick; 
 
         function hideMenu() { 
-            document.getElementById("contextMenu") 
-                    .style.display = "none" 
+            editor.commands.exec('hideContextMenu', editor);
+
+            //document.getElementById("contextMenu") 
+            //        .style.display = "none" 
         } 
 
         function rightClick(e) { 
-            e.preventDefault(); 
+            //e.preventDefault(); 
 
-            console.log('right click');
+            editor.commands.exec('showContextMenu', editor);
 
-            if (document.getElementById("contextMenu") .style.display == "block"){ 
-                hideMenu(); 
-            }else{ 
-                console.log('right click - show');
-                var menu = document.getElementById("contextMenu")      
-                menu.style.display = 'block'; 
-                menu.style.left = e.pageX + "px"; 
-                menu.style.top = (e.pageY - 14) + "px"; 
-            } 
+            //console.log('right click');
+
+            //if (document.getElementById("contextMenu") .style.display == "block"){ 
+            //    hideMenu(); 
+            //}else{ 
+            //    console.log('right click - show');
+            //    var menu = document.getElementById("contextMenu")      
+            //    menu.style.display = 'block'; 
+            //   menu.style.left = e.pageX + "px"; 
+            //    menu.style.top = (e.pageY - 14) + "px"; 
+            //} 
         }
         
         function keyCmd(k, ctrl=false, alt=false, shift=false, meta=false) {
