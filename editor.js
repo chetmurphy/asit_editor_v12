@@ -176,10 +176,100 @@ editor.setTheme("ace/theme/chrome");
 editor.session.setMode("ace/mode/yaml");
 editor.session.on('change', autosave); //TBD restore and implement
 
-console.log('Editor created 59');
+console.log('Editor created 60');
+
+function isClipboardWritingAllowed() {
+    return new Promise(function (resolve, reject) {
+        try {
+            navigator.permissions.query({ name: "clipboard-write" }).then(function (status) {
+                // PermissionStatus object
+                // {
+                //  onchange: null,
+                //  state: "granted" (it could be as well `denied` or `prompt`)
+                // }
+                console.log(status);
+
+                resolve((status.state == "granted"));
+            });
+        } catch (error) {
+            // This could be caused because of a Browser incompatibility or security error
+            // Remember that this feature works only through HTTPS
+            reject(error);
+        }
+    });
+}
 
 function commands(cmd) {
-    editor.commands.exec(cmd, editor);
+    if (cmd == 'cut') {
+        let copyText = editor.getCopyText();
+
+        // 3. Simulate Cut in the editor
+        editor.insert("");
+
+        // 4. Verify if clipboard writing is allowed
+        isClipboardWritingAllowed().then(function (allowed) {
+
+            // 5. Write to clipboard if allowed (simulating that text has been cut from the editor)
+            if (allowed) {
+                navigator.clipboard.writeText(copyText).then(function () {
+                    console.log("The text has been successfully cut to the clipboard!");
+                });
+            }
+        }).catch(function (err) {
+            console.log("Cannot copy to clipboard", err);
+        });
+    }
+
+    if (cmd == 'copy') {
+        let copyText = editor.getCopyText();
+
+        // 4. Verify if clipboard writing is allowed
+        isClipboardWritingAllowed().then(function (allowed) {
+
+            // 5. Write to clipboard if allowed (simulating that text has been cut from the editor)
+            if (allowed) {
+                navigator.clipboard.writeText(copyText).then(function () {
+                    console.log("The text has been successfully cut to the clipboard!");
+                });
+            }
+        }).catch(function (err) {
+            console.log("Cannot copy to clipboard", err);
+        });
+    }
+
+    if (cmd == 'paste') {
+        isClipboardReadingAllowed().then(function (isAllowed) {
+            if (isAllowed) {
+
+                // 3. Read the content of the clipboard
+                navigator.clipboard.read().then((data) => {
+                    // 4. Iterate over every possible item in the clipboard
+                    for (let i = 0; i < data.length; i++) {
+                        // 5. Check if the item contains text
+                        if (data[i].types.includes("text/plain")) {
+                            data[i].getType("text/plain").then(function (blob) {
+                                blob.text().then(function (text) {
+                                    // 6. Insert text from the clipboard to the current cursor position of the editor
+                                    editor.session.insert(editor.getCursorPosition(), text);
+
+                                    // Or to a custom position
+                                    // editor.session.insert({row: 2, column: 56}, text);
+                                });
+                            });
+                        } else {
+                            console.log("Not text/plain to paste into the editor");
+                        }
+                    }
+                });
+            }
+        }).catch(function (error) {
+            console.log("cannot read clipboard", error);
+        });
+    }
+
+    if (cmd == 'select_all') {
+        editor.selectAll();
+    }
 }
 
 // var dom = require("ace/lib/dom");

@@ -174,28 +174,28 @@
         document.oncontextmenu = rightClick; 
 
         function hideMenu() { 
-            editor.commands.exec('hideContextMenu', editor);
+            //editor.commands.exec('hideContextMenu', editor);
 
-            //document.getElementById("contextMenu") 
-            //        .style.display = "none" 
+            document.getElementById("contextMenu") 
+                .style.display = "none" 
         } 
 
         function rightClick(e) { 
-            //e.preventDefault(); 
+            e.preventDefault(); 
 
-            editor.commands.exec('showContextMenu', editor);
+            //editor.commands.exec('showContextMenu', editor);
 
-            //console.log('right click');
+            console.log('right click');
 
-            //if (document.getElementById("contextMenu") .style.display == "block"){ 
-            //    hideMenu(); 
-            //}else{ 
-            //    console.log('right click - show');
-            //    var menu = document.getElementById("contextMenu")      
-            //    menu.style.display = 'block'; 
-            //   menu.style.left = e.pageX + "px"; 
-            //    menu.style.top = (e.pageY - 14) + "px"; 
-            //} 
+            if (document.getElementById("contextMenu") .style.display == "block"){ 
+                hideMenu(); 
+            }else{ 
+                console.log('right click - show');
+                var menu = document.getElementById("contextMenu")      
+                menu.style.display = 'block'; 
+               menu.style.left = e.pageX + "px"; 
+                menu.style.top = (e.pageY - 14) + "px"; 
+            } 
         }
         
         function keyCmd(k, ctrl=false, alt=false, shift=false, meta=false) {
@@ -220,9 +220,10 @@
 
         <div id="contextMenu" class="context-menu" style="display: none; z-index: 999;"> 
             <ul class="menu"> 
-                <li><a href="#" onclick="commands('onCopy')"><i class="material-icons md-12">content_copy</i>Copy</a></li> 
-                <li><a href="#" onclick="commands('onCut')"><i class="material-icons md-12">content_cut</i>Cut</a></li> 
-                <li><a href="#" onclick="commands('onPaste')"><i class="material-icons md-12">content_paste</i>Paste</a></li> 
+                <li><a href="#" onclick="commands('copy')"><i class="material-icons md-12">content_copy</i>Copy</a></li> 
+                <li><a href="#" onclick="commands('cut')"><i class="material-icons md-12">content_cut</i>Cut</a></li> 
+                <li><a href="#" onclick="commands('paste')"><i class="material-icons md-12">content_paste</i>Paste</a></li> 
+                <li><a href="#" onclick="commands('select_all')"><i class="material-icons md-12"></i>Select All</a></li> 
             </ul> 
         </div>  
 
