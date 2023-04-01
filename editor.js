@@ -184,13 +184,15 @@ function commands(cmd) {
         editor.execCommand("cut") // or cut
         // 3. Simulate Cut in the editor
         editor.insert("");
-        adsk.fusionSendData('set_clipboard', encode(copyText));   
+        adsk.fusionSendData('set_clipboard', encode(copyText)); 
+        return;  
     }
 
     if (cmd == 'copy') {
         let copyText = editor.getCopyText();
         editor.execCommand("copy") // or cut
-        adsk.fusionSendData('set_clipboard', encode(copyText));   
+        adsk.fusionSendData('set_clipboard', encode(copyText));  
+        return; 
     }
 
     if (cmd == 'paste') {
@@ -204,11 +206,15 @@ function commands(cmd) {
                     }
                     
                 }});
+        return;
     }
 
     if (cmd == 'select_all') {
         editor.selectAll();
+        return;
     }
+
+    editor.commands.exec(cmd, editor);
 }
 
 // var dom = require("ace/lib/dom");
