@@ -179,40 +179,40 @@ editor.session.on('change', autosave); //TBD restore and implement
 console.log('Editor created 60');
 
 function commands(cmd) {
-    if (cmd == 'cut') {
-        let copyText = editor.getCopyText();
-        editor.execCommand("cut") // or cut
-        // 3. Simulate Cut in the editor
-        editor.insert("");
-        adsk.fusionSendData('set_clipboard', encode(copyText)); 
-        return;  
-    }
+    // if (cmd == 'cut') {
+    //     let copyText = editor.getCopyText();
+    //     editor.execCommand("cut") // or cut
+    //     // 3. Simulate Cut in the editor
+    //     editor.insert("");
+    //     adsk.fusionSendData('set_clipboard', encode(copyText)); 
+    //     return;  
+    // }
 
-    if (cmd == 'copy') {
-        let copyText = editor.getCopyText();
-        editor.execCommand("copy") // or cut
-        adsk.fusionSendData('set_clipboard', encode(copyText));  
-        return; 
-    }
+    // if (cmd == 'copy') {
+    //     let copyText = editor.getCopyText();
+    //     editor.execCommand("copy") // or cut
+    //     adsk.fusionSendData('set_clipboard', encode(copyText));  
+    //     return; 
+    // }
 
-    if (cmd == 'paste') {
-        adsk.fusionSendData('get_clipboard', encode(''))
-            .then((result) => {
-                if (result.length > 0) {
-                    var r = JSON.parse(result);
-                    if (r.status == 'OK') {
-                        data = decode(r.data);
-                        editor.insert(data);
-                    }
+    // if (cmd == 'paste') {
+    //     adsk.fusionSendData('get_clipboard', encode(''))
+    //         .then((result) => {
+    //             if (result.length > 0) {
+    //                 var r = JSON.parse(result);
+    //                 if (r.status == 'OK') {
+    //                     data = decode(r.data);
+    //                     editor.insert(data);
+    //                 }
                     
-                }});
-        return;
-    }
+    //             }});
+    //     return;
+    // }
 
-    if (cmd == 'select_all') {
-        editor.selectAll();
-        return;
-    }
+    // if (cmd == 'select_all') {
+    //     editor.selectAll();
+    //     return;
+    // }
 
     editor.commands.exec(cmd, editor);
 }
