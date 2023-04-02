@@ -263,13 +263,14 @@ function get_parent_tag(pos){
 
 const tag_completions = [ 
     {
-        caption: 'tbd',
+        caption: 'tbd_sketch',
         value: `sketch
             plane: xy
     `,
         meta: "fusion"
-    }, {
-        caption: 'tbd',
+    }, 
+    {
+        caption: 'tbd_component',
         value: `component
     translation: !point3d
         x: !tbd
