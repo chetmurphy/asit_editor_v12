@@ -1363,7 +1363,7 @@ define("ace/mode/yaml/yaml-lint", [], function (require, exports, module) {
                 };
 
                 function lint(content, opts, cb) {
-                    Type = require('./js-yaml/type');
+                    // Type = require('./js-yaml/type');
                     let asit = new yaml.Type('!asit', { kind: 'mapping' });
                     let body = new yaml.Type('!body', { kind: 'mapping' });
                     let circles = new yaml.Type('!circles:', { kind: 'mapping' });
